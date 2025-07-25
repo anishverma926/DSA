@@ -1,21 +1,21 @@
 class Solution {
 public:
     int maxSum(vector<int>& nums) {
-        int n = nums.size();
         unordered_set<int> st;
-        int left = 0, maxSum = nums[0], currSum = 0;  // Initialize maxSum properly
-        
-        for (int i = 0; i < n; i++) {
-            while (st.count(nums[i])) {
-                st.erase(nums[left]);
-                currSum -= nums[left];
-                left++;
+
+        int sum = 0;
+
+        int maxNeg = INT_MIN;
+
+        for(int &num : nums) {
+            if(num <= 0) {
+                maxNeg = max(maxNeg, num);
+            } else if(!st.count(num)) {
+                sum += num;
+                st.insert(num);
             }
-            st.insert(nums[i]);
-            currSum += nums[i];
-            maxSum = max(maxSum, currSum);
         }
         
-        return maxSum;
+        return sum == 0 ? maxNeg : sum;
     }
 };
