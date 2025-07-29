@@ -3,19 +3,18 @@ public:
     void rotate(vector<vector<int>>& matrix) {
         int n = matrix.size();
 
-        vector<vector<int>> ans(n, vector<int>(n));
-
+        // find the transverse matrix
         for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                ans[j][n - 1 - i] = matrix[i][j];
+            for(int j = i; j < n; j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
         }
 
-        // copy to original matrix
+        // reverse the matrix
         for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                matrix[i][j] = ans[i][j];
-            }
+            reverse(matrix[i].begin(), matrix[i].end());
         }
     }
 };
