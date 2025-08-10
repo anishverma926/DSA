@@ -1,12 +1,20 @@
 class Solution {
 public:
+    string getSortedStr(int n){
+        string str = to_string(n);
+        sort(str.begin(), str.end());
+
+        return str;
+    }
+
     bool reorderedPowerOf2(int n) {
-        if(n <= 0)
+        string s = getSortedStr(n);
+
+        for(int p = 0; p <= 29; p++){
+            if(s == getSortedStr(1 << p))
+            return true;
+        }
+
         return false;
-
-        if(n == 1)
-        return true;
-
-        return (n % 2 == 0 && reorderedPowerOf2(n / 2));
     }
 };
