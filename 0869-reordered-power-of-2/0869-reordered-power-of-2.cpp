@@ -1,20 +1,18 @@
 class Solution {
 public:
-    string getSortedStr(int n){
+    bool reorderedPowerOf2(int n) {
+        unordered_set<string> st;
+
+        if(st.empty()){
+            for(int p = 0; p <= 29; p++){
+                string s = to_string(1 << p);
+                st.insert(s);
+            } 
+        }
+
         string str = to_string(n);
         sort(str.begin(), str.end());
 
-        return str;
-    }
-
-    bool reorderedPowerOf2(int n) {
-        string s = getSortedStr(n);
-
-        for(int p = 0; p <= 29; p++){
-            if(s == getSortedStr(1 << p))
-            return true;
-        }
-
-        return false;
+        return st.count(str);
     }
 };
