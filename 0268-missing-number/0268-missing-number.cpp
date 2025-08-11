@@ -3,15 +3,12 @@ public:
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
 
-        int sumArr = 0;
+        int ans = n;
         for(int i = 0; i < n; i++){
-            sumArr += nums[i];
+            ans ^= i;
+            ans ^= nums[i];
         }
 
-        int requireSum = n * (n + 1) / 2;
-
-        int missingEle = requireSum - sumArr;
-
-        return missingEle;
+        return ans;
     }
 };
