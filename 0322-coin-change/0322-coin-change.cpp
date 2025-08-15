@@ -1,55 +1,32 @@
 class Solution {
 public:
-
-    int solve(int i, vector<int>&arr, int k, vector<vector<int>>dp){
-        if(k == 0)
-        return 0;
-
-        if(i == 0){
-            if(k % arr[i] == 0){
-                return k / arr[i];
-            }
-            return 1e9;
-        }
-
-        if(dp[i][k] != -1)
-        return dp[i][k];
-
-        int notPick = solve(i-1, arr, k, dp);
-        int pick = INT_MAX;
-        if(arr[i] <= k){
-            pick = 1 + solve(i, arr, k - arr[i], dp);
-        }
-
-        return dp[i][k] = min(pick , notPick);
-
-    }
-
-    int coinChange(vector<int>& coins, int target) {
+    int coinChange(vector<int>& coins, int amount) {
         int n = coins.size();
-        vector<vector<int>>dp(n, vector<int>(target+1, 0));
-        
-        for(int j=0;j<=target;j++){
-            if(j % coins[0] == 0){
-                dp[0][j] = j / coins[0];
-            }
+
+        vector<int> prev(amount + 1, 0), curr(amount + 1, 0);
+
+        for(int target = 0; target <= amount; target++){
+            if(target % coins[n-1] == 0)
+            prev[target] = target / coins[n-1];
             else
-            dp[0][j] = 1e9;
-        }
-        for(int i=1;i<coins.size();i++){
-            for(int j=1;j<=target;j++){
-                int notPick = dp[i-1][j];
-                int pick = INT_MAX;
-                if(coins[i] <= j){
-                    pick = 1 + dp[i][j - coins[i]];
-                }
-                
-                dp[i][j] = min(pick , notPick);
-            }
+            prev[target] = 1e9;
         }
 
-        int ans = dp[n-1][target];
-        if(ans >= 1e9) return -1;
-        return ans;
+        for(int i = n-2; i >= 0; i--){
+            for(int target = 0; target <= amount; target++){
+                int not_take = prev[target];
+
+                int take = INT_MAX; // because we have to find minimum coins
+                if(coins[i] <= target){
+                    take = 1 + curr[target - coins[i]];
+                }
+
+                curr[target] = min(take, not_take);
+            }
+            
+            prev = curr;
+        }
+
+        return prev[amount] >= 1e9 ? -1 : prev[amount];
     }
 };
