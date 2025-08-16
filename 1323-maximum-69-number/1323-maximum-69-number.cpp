@@ -1,17 +1,26 @@
 class Solution {
 public:
+    // first 6 at idx = 0 then 6 at idx = 2 that's the last six
     int maximum69Number (int num) {
-        string str = to_string(num);
+        int idxOfSix = -1;
+        int countIdx = 0;
 
-        int n = str.size();
+        int temp = num;
 
-        for(int i = 0; i < n; i++){
-            if(str[i] == '6'){
-                str[i] = '9';
-                break;
+        while(temp > 0){
+            int rem = temp % 10;
+
+            if(rem == 6){
+                idxOfSix = countIdx;
             }
+
+            temp /= 10;
+            countIdx++;
         }
 
-        return stoi(str);
+        if(idxOfSix == -1)
+        return num;
+
+        return num + 3 * pow(10, idxOfSix);
     }
 };
