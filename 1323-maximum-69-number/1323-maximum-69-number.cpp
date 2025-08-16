@@ -1,30 +1,17 @@
 class Solution {
 public:
     int maximum69Number (int num) {
-        vector<int> nums;
+        string str = to_string(num);
 
-        while(num > 0){ 
-            nums.push_back(num % 10);
-            num /= 10;
-        }
+        int n = str.size();
 
-        reverse(nums.begin(), nums.end()); 
-
-        int n = nums.size();
-
-        for(int i = 0; i < n; i++){ // O(n)
-            if(nums[i] == 6){
-                nums[i] = 9;
+        for(int i = 0; i < n; i++){
+            if(str[i] == '6'){
+                str[i] = '9';
                 break;
             }
         }
 
-        int ans = 0;
-
-        for(int num : nums){ // O(n)
-            ans = ans * 10 + num;
-        }
-
-        return ans;
+        return stoi(str);
     }
 };
