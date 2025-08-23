@@ -7,15 +7,15 @@ public:
 
         for(int i = 0; i < n; i++){
             for(int j = i + 1; j < n; j++){
-                unordered_set<int> st;  // for checking the 4th element
+                unordered_set<long long> st;  // for checking the 4th element
                 for(int k = j + 1; k < n; k++){
                     long long sum = nums[i] + nums[j];
                     sum += nums[k];
 
-                    int fourth = target - sum;
+                    long long fourth = target - sum;
                     
                     if(st.count(fourth)){
-                        vector<int>temp = {nums[i], nums[j], nums[k], fourth};
+                        vector<int>temp = {nums[i], nums[j], nums[k], (int)fourth};
                         sort(temp.begin(), temp.end());
                         set.insert(temp);
                     }
