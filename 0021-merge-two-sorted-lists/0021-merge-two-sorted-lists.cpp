@@ -13,17 +13,14 @@ public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         vector<int> arr;
 
-        ListNode* temp1 = list1;
-        ListNode* temp2 = list2;
-
-        while(temp1){
-            arr.push_back(temp1 -> val);
-            temp1 = temp1 -> next;
+        while(list1){
+            arr.push_back(list1 -> val);
+            list1 = list1 -> next;
         }
 
-        while(temp2){
-            arr.push_back(temp2 -> val);
-            temp2 = temp2 -> next;
+        while(list2){
+            arr.push_back(list2 -> val);
+            list2 = list2 -> next;
         }
 
         sort(arr.begin(), arr.end());
