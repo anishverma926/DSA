@@ -9,9 +9,11 @@
  * };
  */
 class Solution {
-public:
+public: 
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        stack<int> s1, s2, s3;
+        // Approach - 2 : using stack
+
+        stack<int> s1, s2;
 
         while(l1){
             s1.push(l1 -> val);
@@ -23,37 +25,30 @@ public:
             l2 = l2 -> next;
         }
 
+        ListNode* temp = new ListNode();
         int carry = 0;
 
         while(!s1.empty() || !s2.empty()){
             int sum = carry;
 
-            if(!s1.empty()) {
+            if(!s1.empty()){
                 sum += s1.top();
                 s1.pop();
             }
+
             if(!s2.empty()){
                 sum += s2.top();
                 s2.pop();
             }
 
-            s3.push(sum % 10);
+            temp -> val = sum % 10;
             carry = sum / 10;
+
+            ListNode* dummyNode = new ListNode(carry);
+            dummyNode -> next = temp; // connect dummyNode to temp 
+            temp = dummyNode;  // move temp node towards the front
         }
 
-        // edge case if still carry over there 
-        if(carry > 0)
-        s3.push(carry);
-
-        ListNode* dummyNode = new ListNode(-1);
-        ListNode* temp = dummyNode;
-
-        while(!s3.empty()){
-            temp -> next = new ListNode(s3.top());
-            s3.pop();
-            temp = temp -> next;
-        }
-
-        return dummyNode -> next;
+        return (carry == 0) ? temp -> next : temp;
     }
 };
