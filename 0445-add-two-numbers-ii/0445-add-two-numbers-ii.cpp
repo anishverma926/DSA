@@ -41,6 +41,10 @@ public:
             carry = sum / 10;
         }
 
+        // edge case if still carry over there 
+        if(carry > 0)
+        s3.push(carry);
+
         ListNode* dummyNode = new ListNode(-1);
         ListNode* temp = dummyNode;
 
