@@ -10,55 +10,45 @@
  */
 class Solution {
 public:
-        ListNode* reverse(ListNode* head) {
+    ListNode* reverse(ListNode* head){
         ListNode* prev = NULL;
-        ListNode* curr = head;
-        ListNode* next = NULL;
+        ListNode* temp = head;
 
-        while (curr != NULL) {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+        while(temp){
+            ListNode* front = temp -> next;
+            temp -> next = prev;
+            prev = temp;
+            temp = front;
         }
 
         return prev;
     }
 
     bool isPalindrome(ListNode* head) {
-        if (head == NULL || head->next == NULL) {
-            return true;
-        }
-
-        // Find the middle of the list
         ListNode* slow = head;
         ListNode* fast = head;
 
-        while (fast != NULL && fast->next != NULL) {
-            slow = slow->next;
-            fast = fast->next->next;
+        while(fast -> next -> next){
+            slow = slow -> next;
+            fast = fast -> next -> next;
         }
 
-        // Reverse the second half of the list
-        ListNode* reverseHead = reverse(slow);
+        ListNode* newHead = reverse(slow -> next);
 
-        // Compare the two halves
-        ListNode* temp1 = head;
-        ListNode* temp2 = reverseHead;
+        ListNode* first = head;
+        ListNode* second = newHead;
 
-        bool isPalin = true;
-        while (temp2 != NULL) {
-            if (temp1->val != temp2->val) {
-                isPalin = false;
-                break;
-            }
-            temp1 = temp1->next;
-            temp2 = temp2->next;
+        while(second){
+            if(first -> val != second -> val)
+            return false;
+
+            first = first -> next;
+            second = second -> next;
         }
 
-        // Restore the list (optional)
-        reverse(reverseHead);
+        // before returning reverse again newHead 
+        reverse(newHead);
 
-        return isPalin;
+        return true;
     }
 };
