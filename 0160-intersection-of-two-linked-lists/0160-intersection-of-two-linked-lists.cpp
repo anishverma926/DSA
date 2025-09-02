@@ -8,47 +8,41 @@
  */
 class Solution {
 public:
+    ListNode* solve(ListNode* l1, ListNode* l2, int diff){
+        for(int i = 0; i < diff; i++){
+            l1 = l1 -> next;
+        }
+
+        while(l1 && l2){
+            if(l1 == l2)
+            return l1;
+
+            l1 = l1 -> next;
+            l2 = l2 -> next;
+        }
+
+        return NULL;
+    }
+
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        ListNode* a = headA;
-        ListNode* b = headB;
+        int n1 = 0, n2 = 0;
+        ListNode* temp1 = headA;
+        ListNode* temp2 = headB;
 
-        while(a->next && b->next){
-            if(a==b){
-                return a;
-            }
-
-            a = a -> next;
-            b = b -> next;
+        while(temp1){
+            n1++;
+            temp1 = temp1 -> next;
         }
 
-        if(a->next == 0){
-            int blen = 0;
-            while(b->next){
-                blen++;
-                b = b->next;
-
-            }
-            while(blen--){
-                headB = headB->next;
-            } 
-        }
-        else{
-            int alen = 0;
-            while(a->next){
-                alen++;
-                a = a->next;
-
-            }
-            while(alen--){
-                headA = headA->next;
-            }  
+        while(temp2){
+            n2++;
+            temp2 = temp2 -> next;
         }
 
-        while(headA != headB){
-            headA = headA->next;
-            headB = headB ->next;
+        if(n1 > n2){
+            return solve(headA, headB, n1 - n2);
         }
-        return headA;
-        
+        else
+        return solve(headB, headA, n2 - n1); // pass greater list as l1
     }
 };
