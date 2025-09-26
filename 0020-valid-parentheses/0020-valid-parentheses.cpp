@@ -28,9 +28,6 @@ public:
             }
         }
 
-        if(st.empty())
-        return true;
-
-        return false;
+        return st.size() == 0 ? true : false;
     }
 };
