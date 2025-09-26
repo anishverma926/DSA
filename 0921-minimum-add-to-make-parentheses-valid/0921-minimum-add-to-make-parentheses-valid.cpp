@@ -3,25 +3,25 @@ public:
     int minAddToMakeValid(string s) {
         int n = s.size();
         
-        stack<char> st;
+        int count = 0;
         
         for(int i = 0; i < n; i++){
             char ch = s[i];
             
             // opening brackets
             if(ch == '(')
-            st.push(ch);
+            count++;
             
             // closing brackets
             else{
-                if(!st.empty() && ch == ')' && st.top() == '('){
-                    st.pop();
+                if(count && ch == ')'){
+                    count--;
                 }
                 else 
-                st.push(ch);
+                count++;
             }
         }
 
-        return st.size();
+        return count;
     }
 };
