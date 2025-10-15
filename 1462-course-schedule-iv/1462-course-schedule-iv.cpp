@@ -53,8 +53,11 @@ public:
                 }
 
                 for(int neigh : adj[node]){
-                    if(!visited[neigh])
-                    q.push(neigh);
+                    if(!visited[neigh]){
+                        q.push(neigh);
+                        visited[neigh] = true;
+                    }
+                    
                 }
             }
         }
