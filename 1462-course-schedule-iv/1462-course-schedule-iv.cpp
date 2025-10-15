@@ -33,11 +33,30 @@ public:
         vector<bool> ans(n);
 
         for(int i = 0; i < n; i++){
-            int u = queries[i][0];
-            int v = queries[i][1];
+            int start = queries[i][0];
+            int target = queries[i][1];
 
             vector<bool> visited(N, false);
-            ans[i] = dfs(adj, u, v, visited);
+            // BFS
+            queue<int> q;
+
+            q.push(start);
+
+            while(!q.empty()){
+                int node = q.front();
+                q.pop();
+
+                visited[node] = true;
+
+                if(node == target){
+                    ans[i] = true;
+                }
+
+                for(int neigh : adj[node]){
+                    if(!visited[neigh])
+                    q.push(neigh);
+                }
+            }
         }
 
         return ans;
