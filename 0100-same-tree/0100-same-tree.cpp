@@ -15,12 +15,40 @@ public:
         if(!p && !q)
         return true;
 
-        if((p && !q) || (!p && q))
-        return false;
+        queue<TreeNode*> q1, q2;
+        q1.push(p);
+        q2.push(q);
 
-        if(p -> val != q-> val)
-        return false;
+        while(!q1.empty() && !q2.empty()){
+            TreeNode* root1 = q1.front();
+            q1.pop();
 
-        return isSameTree(p-> left, q-> left) && isSameTree(p-> right, q-> right);
+            TreeNode* root2 = q2.front();
+            q2.pop();
+
+            if(root1 -> val != root2 -> val)
+            return false;
+
+            // Check left child mismatch
+            if((root1 -> left && !root2 ->left) || (!root1 -> left && root2 ->left))
+            return false; 
+
+            // Check right child mismatch
+            if((root1 -> right && !root2 -> right) || (!root1 -> right && root2 -> right))
+            return false; 
+
+            // Push children if both exist
+            if(root1 -> left && root2 -> left){
+                q1.push(root1 -> left);
+                q2.push(root2 -> left);
+            }
+
+            if(root1 -> right && root2 -> right){
+                q1.push(root1 -> right);
+                q2.push(root2 -> right);
+            }
+        }
+
+        return true;
     }
 };
