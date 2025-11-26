@@ -11,41 +11,42 @@
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if(!head)
-        return head;
+        // if(!head)
+        // return head;
+
+        int count = 0;
 
         ListNode* temp = head;
-        int len = 0;
 
         while(temp){
-            len++;
+            count++;
             temp = temp -> next;
         }
 
-        k = k % len;
-        len -= k;
+        k = k % count;
 
-        if(k % len == 0)
+        if(k == 0)
         return head;
 
+        count -= k; // reach at (count - k)th node for deleting pointer
 
-        ListNode* curr = head;
-        ListNode* prev = NULL;
+        ListNode* prev = NULL, *curr = head;
 
-        while(len--){
+        while(count--){
             prev = curr;
             curr = curr -> next;
         }
 
         prev -> next = NULL;
+
         ListNode* tail = curr;
 
         while(tail -> next){
             tail = tail -> next;
         }
-        tail -> next = head;
-        head = curr;
 
-        return head;
+        tail -> next = head;
+
+        return curr;
     }
 };
