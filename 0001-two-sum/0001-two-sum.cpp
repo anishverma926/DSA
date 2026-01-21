@@ -3,18 +3,25 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         int n = nums.size();
 
-        unordered_map<int, int> mp;
+        vector<pair<int, int>> temp(n);
 
-        for(int i = 0; i < n; i++){
-            int first = nums[i];
-            int second = target - first;
+        for(int i = 0; i < n; i++)
+        temp[i] = {nums[i], i};
 
-            if(mp.count(second))
-            return {mp[second], i};
+        sort(temp.begin(), temp.end());
+        
+        int i = 0, j = n-1;
+        while(i < j){
+            int sum = temp[i].first + temp[j].first;
 
-            mp[first] = i;
+            if(sum == target)
+            return {temp[i].second, temp[j].second};
+
+            else if(sum < target)
+            i++;
+            else
+            j--;
         }
-
-        return {0, 0};
+        return {-1, -1};
     }
 };
