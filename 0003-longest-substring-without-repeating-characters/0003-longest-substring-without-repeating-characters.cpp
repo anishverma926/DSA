@@ -3,20 +3,22 @@ public:
     int lengthOfLongestSubstring(string s) {
         int n = s.size();
 
+        int i = 0;
+        int j = 0;
+
         int ans = 0;
 
-        for(int i = 0; i < n; i++){
-            int count = 0;
-            unordered_map<char, int> mp;
-            for(int j = i; j < n; j++){
-                if(mp[s[j]] == 0){
-                    count++;
-                    ans = max(ans, count);
-                    mp[s[j]]++;
-                }
-                else 
-                break;
+        unordered_map<char, int> mp;
 
+        while(j < n){
+            if(!mp[s[j]]){
+                ans = max(ans, j - i + 1);
+                mp[s[j]]++;
+                j++;
+            }
+            else{
+                mp[s[i]]--;
+                i++;
             }
         }
 
